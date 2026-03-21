@@ -1,0 +1,7 @@
+package org.example.todobackend.todo;
+
+public record Todo(
+        String id
+) {
+
+}
