@@ -29,4 +29,10 @@ public class TodoService {
 
         return todoRepository.save(todoToSave);
     }
+
+    public Todo updateTodo(UpdateTodo todo, String id){
+        Todo todoToUpdate = new Todo(id, todo.description(), todo.status());
+
+        return todoRepository.save(todoToUpdate);
+    }
 }

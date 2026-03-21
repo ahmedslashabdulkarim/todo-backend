@@ -58,5 +58,23 @@ class TodoServiceTest {
         assertEquals(todoToSave, actual);
     }
 
+    @Test
+    void updateTodo(){
+
+        //GIVEN
+        String id = "123";
+        UpdateTodo todoToUpdate = new UpdateTodo("test-description", "IN_PROGRESS");
+        Todo updatedTodo = new Todo("123", "test-description", "IN_PROGRESS");
+
+        when(todoRepository.save(updatedTodo)).thenReturn(updatedTodo);
+
+        //WHEN
+        Todo actual = todoService.updateTodo(todoToUpdate, id);
+
+        //THEN
+        verify(todoRepository).save(updatedTodo);
+        assertEquals(updatedTodo, actual);
+
+    }
 
 }
