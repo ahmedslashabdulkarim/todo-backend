@@ -30,7 +30,9 @@ class TodoControllerTest {
         //THEN
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) content().json("""
-                                            []
+                                            [
+                                            
+                                            ]
                                             """));
 
 
