@@ -74,7 +74,7 @@ class TodoControllerTest {
     void putTodo() throws Exception {
 
         //GIVEN
-        Todo existingTodo = new Todo("1", "test-description", "OPEN");
+        Todo existingTodo = new Todo("1", "test-description", TodoStatus.OPEN);
 
         todoRepository.save(existingTodo);
 
