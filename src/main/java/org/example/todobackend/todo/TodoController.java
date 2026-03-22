@@ -20,6 +20,12 @@ public class TodoController {
         return todoService.findAllTodos();
     }
 
+    @GetMapping("{id}")
+    public Todo getTodoById(@PathVariable String id){
+        return todoService.findTodoById(id);
+    }
+
+
     @PostMapping
     public Todo postTodo(@RequestBody NewTodo newTodo){
         return todoService.addTodo(newTodo);
@@ -30,7 +36,6 @@ public class TodoController {
     public Todo putTodo(@RequestBody UpdateTodo todo, @PathVariable String id){
         return todoService.updateTodo(todo, id);
     }
-
 
 
 }

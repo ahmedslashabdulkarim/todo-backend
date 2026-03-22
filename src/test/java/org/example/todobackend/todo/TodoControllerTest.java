@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -96,5 +97,40 @@ class TodoControllerTest {
                         "status": "IN_PROGRESS"
                     }
                     """));
+    }
+
+    //ControllerTest-Integrationstest
+    @Test
+    @DirtiesContext
+    void getById() throws Exception {
+
+        //GIVEN
+        Todo existingTodo = new Todo("1", "test-description", TodoStatus.OPEN);
+        todoRepository.save(existingTodo);
+
+        //WHEN
+        mockMvc.perform(get("/api/todo/1"))
+                //THEN
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                            {
+                                "id": "1",
+                                "description": "test-description",
+                                "status": "OPEN"
+                            }
+                        """));
+        //THEN
+    }
+
+    @Test
+    @DirtiesContext
+    void getByIdTest_whenInvalidId_thenStatus404() throws Exception {
+
+        //GIVEN
+
+        //WHEN
+        mockMvc.perform(get("/api/todo/1"))
+                //THEN
+                .andExpect(status().isNotFound());
     }
 }
