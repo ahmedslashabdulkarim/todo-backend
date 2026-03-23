@@ -10,9 +10,11 @@ public class TodoController {
 
 
     private final TodoService todoService;
+    private final TodoRepository todoRepository;
 
-    public TodoController(TodoService todoService) {
+    public TodoController(TodoService todoService, TodoRepository todoRepository) {
         this.todoService = todoService;
+        this.todoRepository = todoRepository;
     }
 
     @GetMapping
@@ -35,6 +37,11 @@ public class TodoController {
     @PutMapping("/{id}")
     public Todo putTodo(@RequestBody UpdateTodo todo, @PathVariable String id){
         return todoService.updateTodo(todo, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable String id) {
+        todoService.deleteTodo(id);
     }
 
 

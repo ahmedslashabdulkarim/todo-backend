@@ -10,9 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -71,7 +69,7 @@ class TodoControllerTest {
 
 
     @Test
-    @DirtiesContext
+    @DirtiesContext     //ControllerTest-Integrationstest
     void putTodo() throws Exception {
 
         //GIVEN
@@ -99,9 +97,9 @@ class TodoControllerTest {
                     """));
     }
 
-    //ControllerTest-Integrationstest
+
     @Test
-    @DirtiesContext
+    @DirtiesContext     //ControllerTest-Integrationstest
     void getById() throws Exception {
 
         //GIVEN
@@ -123,7 +121,7 @@ class TodoControllerTest {
     }
 
     @Test
-    @DirtiesContext
+    @DirtiesContext     //ControllerTest-Integrationstest
     void getByIdTest_whenInvalidId_thenStatus404() throws Exception {
 
         //GIVEN
@@ -133,4 +131,20 @@ class TodoControllerTest {
                 //THEN
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    @DirtiesContext     //ControllerTest-Integrationstest
+    void deleteTodoById() throws Exception {
+
+        //GIVEN
+        Todo existingTodo = new Todo("1", "test-description", TodoStatus.OPEN);
+        todoRepository.save(existingTodo);
+        //WHEN
+        mockMvc.perform(delete("/api/todo/1"))
+        //THEN
+                .andExpect(status().isOk());
+
+    }
+
+
 }
