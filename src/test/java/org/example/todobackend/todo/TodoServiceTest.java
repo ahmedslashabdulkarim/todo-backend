@@ -1,5 +1,5 @@
-package org.example.todobackend.todo;
-
+package org.example.todobackend.todo;//package org.example.todobackend.chatgpt;
+import org.example.todobackend.chatgpt.ChatGPTService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,11 +17,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 class TodoServiceTest {
+    ChatGPTService chatGPTService = mock(ChatGPTService.class);
 
     TodoRepository todoRepository = mock(TodoRepository.class);
-    IdService idService = mock(IdService.class);
-    TodoService todoService = new TodoService(todoRepository, idService);
 
+    IdService idService = mock(IdService.class);
+    TodoService todoService = new TodoService(todoRepository, idService, chatGPTService);
 
     @Test
     void findAllTodos() {
@@ -49,6 +50,10 @@ class TodoServiceTest {
         Todo todoToSave = new Todo("Test-Id", "Test-Description", TodoStatus.OPEN);
 
         when(idService.randomId()).thenReturn("Test-Id");
+
+        when(chatGPTService.checkSpelling("Test-Description"))
+                .thenReturn("Test-Description");
+
         when(todoRepository.save(todoToSave)).thenReturn(todoToSave);
 
         //WHEN
