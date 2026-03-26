@@ -37,10 +37,10 @@ public class TodoService {
         return todoRepository.save(todoToUpdate);
     }
 
-
+    //Global Exception
     public Todo findTodoById(String id) {
         return todoRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Todo with id:"+ id +"not found"));
+                .orElseThrow(() -> new NoSuchElementException("Todo with id: " + id + " not found!"));
     }
 
     public void deleteTodo(String id){

@@ -26,10 +26,8 @@ class TodoControllerTest {
     @Test
     void getAllTodos() throws Exception{
         //GIVEN
-
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
-
         //THEN
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) content().json("""
@@ -41,9 +39,7 @@ class TodoControllerTest {
     @Test
     @DirtiesContext
     void postTodo() throws Exception {
-
         //GIVEN
-
         //WHEN
         mockMvc.perform(post("/api/todo")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -71,12 +67,9 @@ class TodoControllerTest {
     @Test
     @DirtiesContext     //ControllerTest-Integrationstest
     void putTodo() throws Exception {
-
         //GIVEN
         Todo existingTodo = new Todo("1", "test-description", TodoStatus.OPEN);
-
         todoRepository.save(existingTodo);
-
         //WHEN
         mockMvc.perform(put("/api/todo/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -123,19 +116,17 @@ class TodoControllerTest {
     @Test
     @DirtiesContext     //ControllerTest-Integrationstest
     void getByIdTest_whenInvalidId_thenStatus404() throws Exception {
-
         //GIVEN
-
         //WHEN
         mockMvc.perform(get("/api/todo/1"))
                 //THEN
                 .andExpect(status().isNotFound());
     }
 
+
     @Test
     @DirtiesContext     //ControllerTest-Integrationstest
     void deleteTodoById() throws Exception {
-
         //GIVEN
         Todo existingTodo = new Todo("1", "test-description", TodoStatus.OPEN);
         todoRepository.save(existingTodo);
@@ -144,6 +135,19 @@ class TodoControllerTest {
         //THEN
                 .andExpect(status().isOk());
 
+    }
+
+
+    //Global Excption
+    @Test
+    @DirtiesContext
+    void getById_whenInvalidId_thenReturnErrorMessage() throws Exception {
+        // WHEN
+        mockMvc.perform(get("/api/todo/888"))
+                // THEN
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("Todo with id: 888 not found!"));
     }
 
 

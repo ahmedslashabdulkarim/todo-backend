@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.NoSuchElementException;
 
-@RestControllerAdvice
+@RestControllerAdvice//global Exception
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
