@@ -131,7 +131,7 @@ class TodoControllerTest {
         // WHEN
         mockMvc.perform(get("/api/todo/888"))
                 // THEN
-                .andExpect(status().isNotFound())
+                .andExpect(status().isNotFound()) //dies kommt von @ResponseStatus(HttpStatus.NOT_FOUND) in class GlobalExceptionHandler.
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value("Todo with id: 888 not found!"));
     }
